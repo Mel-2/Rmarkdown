@@ -1,0 +1,45 @@
+---
+title: "Regression lineaire"
+author: "Melissa Fils-Aime"
+date: "2022-12-12"
+output: word_document
+---
+
+```{r importation }
+Devoir=read.csv("CreditBancaire.csv")
+attach(Devoir)
+
+```
+
+```{r  regression }
+regression=lm(Jours~Credit+Type, data = Devoir)
+regression
+```
+
+```{r resultat}
+Objet=summary(regression)
+Objet
+```
+
+```{r Tableaux}
+Affichage=Objet$coefficients[,c(1,3,4)]
+Affichage
+```
+
+```{r Coefficients}
+Colonne=Objet$coefficients[,c(1,3)]
+Colonne
+```
+
+```{r Graphique}
+plot(Devoir$Credit, Devoir$Jours, pch=20, main="Droite de regression", xlab="Credit", ylab="Jours")
+abline(regression,col="blue")
+```
+
+```{r fonction}
+fstatistic<-function(data){
+  abc=summary(lm(y~.,data=data))
+  Colonne=Objet$coefficients[,c(1,3)]
+  return(data.frame(Colonne))
+}
+```
